@@ -6,7 +6,6 @@
  */
 
 // BT
-#include "behaviortree_cpp/basic_types.h"
 #include <behaviortree_cpp/bt_factory.h>
 
 // STL

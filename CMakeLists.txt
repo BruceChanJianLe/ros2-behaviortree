@@ -75,6 +75,18 @@ add_executable(tutorial_5
 )
 ament_target_dependencies(tutorial_5 ${dependencies})
 
+# Tutorial 6
+add_executable(tutorial_6
+  ./src/tutorial_6.cpp
+)
+ament_target_dependencies(tutorial_6 ${dependencies})
+
+# Tutorial 7
+add_executable(tutorial_7
+  ./src/tutorial_7.cpp
+)
+ament_target_dependencies(tutorial_7 ${dependencies})
+
 # INSTALL
 install(TARGETS
   main_bt_node
@@ -84,6 +96,8 @@ install(TARGETS
   tutorial_3
   tutorial_4
   tutorial_5
+  tutorial_6
+  tutorial_7
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
