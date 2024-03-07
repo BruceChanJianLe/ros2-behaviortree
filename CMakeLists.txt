@@ -69,11 +69,11 @@ add_executable(tutorial_4
 )
 ament_target_dependencies(tutorial_4 ${dependencies})
 
-# # Tutorial 5
-# add_executable(tutorial_5
-#   ./src/tutorial_5.cpp
-# )
-# ament_target_dependencies(tutorial_5 ${dependencies})
+# Tutorial 5
+add_executable(tutorial_5
+  ./src/tutorial_5.cpp
+)
+ament_target_dependencies(tutorial_5 ${dependencies})
 
 # INSTALL
 install(TARGETS
@@ -83,7 +83,7 @@ install(TARGETS
   tutorial_2_2
   tutorial_3
   tutorial_4
-  # tutorial_5
+  tutorial_5
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
