@@ -148,7 +148,7 @@ int main (int argc, char *argv[])
   factory.registerNodeType<MoveBaseActionNode>("MoveBase");
   factory.registerNodeType<SaySomethingNode>("SaySomething");
 
-  auto tree = factory.createTreeFromFile("./config/tree/tutorial_4.xml");
+  auto tree = factory.createTreeFromFile("./config/behaviortree/tutorial_4.xml");
 
   // Here instead of tree.tickWhileRunning();
   // we prefer our own loop

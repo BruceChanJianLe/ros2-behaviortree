@@ -80,7 +80,7 @@ int main (int argc, char *argv[])
 
   // Trees are created at run-time, but only once in the beginning.
   // IMPORTANT: when the object tree goes out of scope, all the TreeNodes are destroyed
-  auto tree = factory.createTreeFromFile("./config/tree/tutorial_1.xml");
+  auto tree = factory.createTreeFromFile("./config/behatree/tutorial_1.xml");
 
   // To execute a tree, you will need to tick it
   // Ticking the tree will propagate to children based on the logic of the tree

@@ -66,7 +66,7 @@ int main (int argc, char *argv[])
   factory.registerNodeType<SaySomethingNode>("SaySomething");
   factory.registerNodeType<ThinkWhatToSayNode>("ThinkWhatToSay");
 
-  auto tree = factory.createTreeFromFile("./config/tree/tutorial_2.xml");
+  auto tree = factory.createTreeFromFile("./config/behaviortree/tutorial_2.xml");
   tree.tickWhileRunning();
 
   return EXIT_SUCCESS;

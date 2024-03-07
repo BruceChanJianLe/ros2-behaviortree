@@ -101,7 +101,7 @@ int main (int argc, char *argv[])
   factory.registerSimpleAction("SaySomething", [&ti](BT::TreeNode& tn){ return ti.SaySomething(tn); }, ti.providedPorts());
   factory.registerSimpleAction("ThinkWhatToSay", [&ti](BT::TreeNode& tn){ return ti.ThinkWhatToSay(tn); }, ti.providedPorts());
 
-  auto tree = factory.createTreeFromFile("./config/tree/tutorial_2.xml");
+  auto tree = factory.createTreeFromFile("./config/behaviortree/tutorial_2.xml");
   tree.tickWhileRunning();
 
   return EXIT_SUCCESS;

@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
   // In this example a single xml contains multiple behaviortree
   // to determine which one is the "main one", we should first register
   // the xml and then allocate a specific tree, using its ID
-  factory.registerBehaviorTreeFromFile("./config/tree/tutorial_5.xml");
+  factory.registerBehaviorTreeFromFile("./config/behavior/tutorial_5.xml");
   auto tree = factory.createTree("MainTree");
 
   // Helper function to print the tree
