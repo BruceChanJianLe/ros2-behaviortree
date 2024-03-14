@@ -41,61 +41,77 @@ ament_target_dependencies(main_bt_node ${dependencies})
 
 # Tutorial 1
 add_executable(tutorial_1
-  ./src/tutorial_1.cpp
+  ./src/tutorials/tutorial_1.cpp
 )
 ament_target_dependencies(tutorial_1 ${dependencies})
 
 # Tutorial 2
 add_executable(tutorial_2
-  ./src/tutorial_2.cpp
+  ./src/tutorials/tutorial_2.cpp
 )
 ament_target_dependencies(tutorial_2 ${dependencies})
 
 # Tutorial 2 2
 add_executable(tutorial_2_2
-  ./src/tutorial_2_2.cpp
+  ./src/tutorials/tutorial_2_2.cpp
 )
 ament_target_dependencies(tutorial_2_2 ${dependencies})
 
 # Tutorial 3
 add_executable(tutorial_3
-  ./src/tutorial_3.cpp
+  ./src/tutorials/tutorial_3.cpp
 )
 ament_target_dependencies(tutorial_3 ${dependencies})
 
 # Tutorial 4
 add_executable(tutorial_4
-  ./src/tutorial_4.cpp
+  ./src/tutorials/tutorial_4.cpp
 )
 ament_target_dependencies(tutorial_4 ${dependencies})
 
 # Tutorial 5
 add_executable(tutorial_5
-  ./src/tutorial_5.cpp
+  ./src/tutorials/tutorial_5.cpp
 )
 ament_target_dependencies(tutorial_5 ${dependencies})
 
 # Tutorial 6
 add_executable(tutorial_6
-  ./src/tutorial_6.cpp
+  ./src/tutorials/tutorial_6.cpp
 )
 ament_target_dependencies(tutorial_6 ${dependencies})
 
 # Tutorial 7
 add_executable(tutorial_7
-  ./src/tutorial_7.cpp
+  ./src/tutorials/tutorial_7.cpp
 )
 ament_target_dependencies(tutorial_7 ${dependencies})
 
 # Tutorial 8
 add_executable(tutorial_8
-  ./src/tutorial_8.cpp
+  ./src/tutorials/tutorial_8.cpp
 )
 ament_target_dependencies(tutorial_8 ${dependencies})
 
-# INSTALL
-install(TARGETS
-  main_bt_node
+# Tutorial 9
+add_executable(tutorial_9
+  ./src/tutorials/tutorial_9.cpp
+)
+ament_target_dependencies(tutorial_9 ${dependencies})
+
+# Tutorial 10
+add_executable(tutorial_10
+  ./src/tutorials/tutorial_10.cpp
+)
+ament_target_dependencies(tutorial_10 ${dependencies})
+
+# Tutorial 11
+add_executable(tutorial_11
+  ./src/tutorials/tutorial_11.cpp
+)
+ament_target_dependencies(tutorial_11 ${dependencies})
+
+set(TUTORIAL_EXECUTABLES
   tutorial_1
   tutorial_2
   tutorial_2_2
@@ -105,6 +121,15 @@ install(TARGETS
   tutorial_6
   tutorial_7
   tutorial_8
+  tutorial_9
+  tutorial_10
+  tutorial_11
+)
+
+# INSTALL
+install(TARGETS
+  main_bt_node
+  ${TUTORIAL_EXECUTABLES}
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
