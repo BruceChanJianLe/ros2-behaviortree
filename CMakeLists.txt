@@ -69,6 +69,18 @@ add_executable(tutorial_4
 )
 ament_target_dependencies(tutorial_4 ${dependencies})
 
+# Tutorial 4_3
+add_executable(tutorial_4_3
+  ./src/tutorials/tutorial_4_3.cpp
+)
+ament_target_dependencies(tutorial_4_3 ${dependencies})
+
+# Tutorial 4_4
+add_executable(tutorial_4_4
+  ./src/tutorials/tutorial_4_4.cpp
+)
+ament_target_dependencies(tutorial_4_4 ${dependencies})
+
 # Tutorial 5
 add_executable(tutorial_5
   ./src/tutorials/tutorial_5.cpp
@@ -117,6 +129,8 @@ set(TUTORIAL_EXECUTABLES
   tutorial_2_2
   tutorial_3
   tutorial_4
+  tutorial_4_3
+  tutorial_4_4
   tutorial_5
   tutorial_6
   tutorial_7
