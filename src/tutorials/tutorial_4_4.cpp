@@ -1,5 +1,5 @@
 /**
- * tutorial 4 3
+ * tutorial 4 4
  * Reactive and Asynchronous behaviors
  * https://www.behaviortree.dev/docs/tutorial-basics/tutorial_04_sequence
  */
@@ -22,10 +22,11 @@ struct Pose2D
 class BTStatefulWrapper : public BT::StatefulActionNode
 {
 public:
+  typedef BTStatefulWrapper* Self;
   // Any node with ports must have at least one constructor with this signature
   BTStatefulWrapper(const std::string& name,
       const BT::NodeConfig& config,
-      std::function<BT::NodeStatus(Pose2D &goal)> callback_on_start = nullptr,
+      std::function<BT::NodeStatus(Self)> callback_on_start = nullptr,
       std::function<BT::NodeStatus()> callback_on_running = nullptr,
       std::function<void()>           callback_on_halted = nullptr)
     : BT::StatefulActionNode(name, config)
@@ -40,11 +41,7 @@ public:
     std::cout << "BTWrapper - " << __func__ << std::endl;
     if (callback_on_start_)
     {
-      if (!getInput<Pose2D>("goal", goal_))
-      {
-        throw BT::RuntimeError("missing required input [goal]");
-      }
-      return callback_on_start_(goal_);
+      return callback_on_start_(this);
     }
     else
     {
@@ -84,7 +81,7 @@ public:
   }
 
 private:
-  std::function<BT::NodeStatus(Pose2D &goal)> callback_on_start_;
+  std::function<BT::NodeStatus(Self)> callback_on_start_;
   std::function<BT::NodeStatus()> callback_on_running_;
   std::function<void()>           callback_on_halted_;
   Pose2D goal_;
@@ -104,7 +101,8 @@ public:
     return { BT::InputPort<Pose2D>("goal") };
   }
 
-  BT::NodeStatus onStart(Pose2D &goal);
+  BT::NodeStatus onStart(BTStatefulWrapper::Self self);
+  // BT::NodeStatus onStart(Pose2D &goal);
   BT::NodeStatus onRunning();
   void onHalted();
 
@@ -113,8 +111,13 @@ private:
 };
 
 // IMPLEMENTATION
-BT::NodeStatus MoveBaseActionNode::onStart(Pose2D &goal)
+BT::NodeStatus MoveBaseActionNode::onStart(BTStatefulWrapper::Self self)
 {
+  Pose2D goal;
+  if (!self->getInput<Pose2D>("goal", goal))
+  {
+    throw BT::RuntimeError("missing required input [goal]");
+  }
   std::cout << "[MoveBase: SEND REQUEST ]. goal: x=" << goal.x
     << " y=" << goal.y << " theta=" << goal.theta << "\n";
 
@@ -209,7 +212,7 @@ int main (int argc, char *argv[])
   factory.registerNodeType<BTStatefulWrapper>(
       "MoveBase",
       { mb.providedPorts() },
-      [&mb](Pose2D& goal){ return mb.onStart(goal); },
+      [&mb](BTStatefulWrapper::Self self){ return mb.onStart(self); },
       [&mb](){ return mb.onRunning(); },
       [&mb](){ return mb.onHalted(); }
     );
@@ -219,6 +222,7 @@ int main (int argc, char *argv[])
 
   // Here instead of tree.tickWhileRunning();
   // we prefer our own loop
+  std::cout << "BTWrapper Method\n";
   std::cout << "--- ticking\n";
   auto status = tree.tickOnce();
   std::cout << "--- status: " << BT::toStr(status) << "\n\n";
