@@ -84,8 +84,6 @@ private:
   std::function<BT::NodeStatus(Self)> callback_on_start_;
   std::function<BT::NodeStatus()> callback_on_running_;
   std::function<void()>           callback_on_halted_;
-  Pose2D goal_;
-  std::chrono::system_clock::time_point completion_time_;
 };
 
 class MoveBaseActionNode
