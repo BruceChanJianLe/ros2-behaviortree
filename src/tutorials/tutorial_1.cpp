@@ -12,7 +12,7 @@
 #include <iostream>
 
 // ROS2
-#include <rclcpp/rclcpp.hpp>
+#include <ament_index_cpp/get_package_share_directory.hpp>
 
 // Example of custom synchronous action
 // without ports!
@@ -61,7 +61,7 @@ private:
   bool is_open_;
 };
 
-int main (int argc, char *argv[])
+int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
 {
   // We use the behaviortree factory to register the custom nodes
   BT::BehaviorTreeFactory factory; 
@@ -80,7 +80,8 @@ int main (int argc, char *argv[])
 
   // Trees are created at run-time, but only once in the beginning.
   // IMPORTANT: when the object tree goes out of scope, all the TreeNodes are destroyed
-  auto tree = factory.createTreeFromFile("./config/behatree/tutorial_1.xml");
+  std::string package_path = ament_index_cpp::get_package_share_directory("ros2-behaviortree");
+  auto tree = factory.createTreeFromFile(package_path + "/config/behaviortree/tutorial_1.xml");
 
   // To execute a tree, you will need to tick it
   // Ticking the tree will propagate to children based on the logic of the tree
