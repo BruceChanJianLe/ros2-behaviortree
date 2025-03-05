@@ -150,12 +150,12 @@ int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
   factory.registerNodeType<SaySomethingNode>("SaySomething");
 
   auto package_path = ament_index_cpp::get_package_share_directory("ros2-behaviortree");
-  auto tree = factory.createTreeFromFile(package_path + "/config/behaviortree/tutorial_4_sequence.xml");
+  auto tree = factory.createTreeFromFile(package_path + "/config/behaviortree/tutorial_4_reactive_sequence.xml");
 
   // Here instead of tree.tickWhileRunning();
   // we prefer our own loop
-  std::cout << "NOTE: Sequence Only Tick BattryCheck Once!";
-  std::cout << "      Compare to Reactive Sequence, which calls BattryCheck everytime!";
+  std::cout << "NOTE: Reactive Sequence Tick BattryCheck Everytime!";
+  std::cout << "      Compare to Sequence, which calls BattryCheck only once!";
 
   std::cout << "--- ticking\n";
   auto status = tree.tickOnce();

@@ -41,7 +41,8 @@ set(TUTORIAL_EXECUTABLES
   tutorial_2
   tutorial_2_2
   tutorial_3
-  tutorial_4
+  tutorial_4_sequence
+  tutorial_4_reactive_sequence
   tutorial_4_3
   tutorial_4_4
   tutorial_5
