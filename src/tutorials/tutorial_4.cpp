@@ -5,6 +5,7 @@
  */
 
 // BT
+#include <ament_index_cpp/get_package_share_directory.hpp>
 #include <behaviortree_cpp/bt_factory.h>
 
 // STL
@@ -141,14 +142,15 @@ public:
   }
 };
 
-int main (int argc, char *argv[])
+int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
 {
   BT::BehaviorTreeFactory factory;
   factory.registerSimpleCondition("BatteryOK", [&](BT::TreeNode&){ return CheckBattery(); });
   factory.registerNodeType<MoveBaseActionNode>("MoveBase");
   factory.registerNodeType<SaySomethingNode>("SaySomething");
 
-  auto tree = factory.createTreeFromFile("./config/behaviortree/tutorial_4.xml");
+  auto package_path = ament_index_cpp::get_package_share_directory("ros2-behaviortree");
+  auto tree = factory.createTreeFromFile(package_path + "/config/behaviortree/tutorial_4.xml");
 
   // Here instead of tree.tickWhileRunning();
   // we prefer our own loop
