@@ -10,6 +10,9 @@
 // STL
 #include <string>
 
+// ROS2
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
 class SaySomethingNode : public BT::SyncActionNode
 {
 public:
@@ -54,19 +57,22 @@ public:
   // This node writes a value into the port "text"
   BT::NodeStatus tick() override
   {
+    std::string message {"This is a text message!"};
     // the output may change at each tick(). Here we keep it simple
-    setOutput("text", "This is a text message!");
+    setOutput<std::string>("text", message);
+    std::cout << "----- set text as: \"" << message << "\" -----" << std::endl;
     return BT::NodeStatus::SUCCESS;
   }
 };
 
-int main (int argc, char *argv[])
+int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
 {
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomethingNode>("SaySomething");
   factory.registerNodeType<ThinkWhatToSayNode>("ThinkWhatToSay");
 
-  auto tree = factory.createTreeFromFile("./config/behaviortree/tutorial_2.xml");
+  auto package_path = ament_index_cpp::get_package_share_directory("ros2-behaviortree");
+  auto tree = factory.createTreeFromFile(package_path + "/config/behaviortree/tutorial_2.xml");
   tree.tickWhileRunning();
 
   return EXIT_SUCCESS;
