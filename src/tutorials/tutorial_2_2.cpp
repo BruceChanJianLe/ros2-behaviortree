@@ -10,6 +10,9 @@
 // STL
 #include <string>
 
+// ROS2
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
 class ThoughtsInterface
 {
 public:
@@ -31,7 +34,9 @@ public:
 
   BT::NodeStatus ThinkWhatToSay(BT::TreeNode& tn)
   {
-    tn.setOutput("text", "This is a text message!");
+    std::string message {"This is a text message!"};
+    tn.setOutput("text", message);
+    std::cout << "----- set text as: \"" << message << "\" -----" << std::endl;
     return BT::NodeStatus::SUCCESS;
   }
 
@@ -94,14 +99,15 @@ public:
 //   }
 // };
 
-int main (int argc, char *argv[])
+int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
 {
   BT::BehaviorTreeFactory factory;
   ThoughtsInterface ti;
   factory.registerSimpleAction("SaySomething", [&ti](BT::TreeNode& tn){ return ti.SaySomething(tn); }, ti.providedPorts());
   factory.registerSimpleAction("ThinkWhatToSay", [&ti](BT::TreeNode& tn){ return ti.ThinkWhatToSay(tn); }, ti.providedPorts());
 
-  auto tree = factory.createTreeFromFile("./config/behaviortree/tutorial_2.xml");
+  auto package_path = ament_index_cpp::get_package_share_directory("ros2-behaviortree");
+  auto tree = factory.createTreeFromFile(package_path + "/config/behaviortree/tutorial_2.xml");
   tree.tickWhileRunning();
 
   return EXIT_SUCCESS;
