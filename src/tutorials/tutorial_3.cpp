@@ -95,7 +95,7 @@ static const char* xml_text = R"(
 </root>
 )";
 
-int main (int argc, char *argv[])
+int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
 {
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<CalculateGoalNode>("CalculateGoal");
