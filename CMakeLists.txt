@@ -9,15 +9,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# find dependencies
-find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(rclcpp_action REQUIRED)
-find_package(rclcpp_lifecycle REQUIRED)
-find_package(behaviortree_cpp REQUIRED)
-find_package(behaviortree_ros2 REQUIRED) # git clone https://github.com/BehaviorTree/BehaviorTree.ROS2.git --branch humble
-find_package(std_msgs REQUIRED)
-find_package(std_srvs REQUIRED)
 
 # BUILD
 set(dependencies
@@ -25,10 +16,16 @@ set(dependencies
   rclcpp_action
   rclcpp_lifecycle
   behaviortree_cpp
-  behaviortree_ros2
+  # behaviortree_ros2 # git clone https://github.com/BehaviorTree/BehaviorTree.ROS2.git --branch humble
   std_msgs
   std_srvs
+  ament_index_cpp
 )
+
+# find dependencies
+foreach(pkg IN LISTS dependencies)
+  find_package(${pkg} REQUIRED)
+endforeach()
 
 include_directories(include)
 
@@ -38,90 +35,6 @@ add_executable(main_bt_node
   ./src/bt_ros.cpp
 )
 ament_target_dependencies(main_bt_node ${dependencies})
-
-# Tutorial 1
-add_executable(tutorial_1
-  ./src/tutorials/tutorial_1.cpp
-)
-ament_target_dependencies(tutorial_1 ${dependencies})
-
-# Tutorial 2
-add_executable(tutorial_2
-  ./src/tutorials/tutorial_2.cpp
-)
-ament_target_dependencies(tutorial_2 ${dependencies})
-
-# Tutorial 2 2
-add_executable(tutorial_2_2
-  ./src/tutorials/tutorial_2_2.cpp
-)
-ament_target_dependencies(tutorial_2_2 ${dependencies})
-
-# Tutorial 3
-add_executable(tutorial_3
-  ./src/tutorials/tutorial_3.cpp
-)
-ament_target_dependencies(tutorial_3 ${dependencies})
-
-# Tutorial 4
-add_executable(tutorial_4
-  ./src/tutorials/tutorial_4.cpp
-)
-ament_target_dependencies(tutorial_4 ${dependencies})
-
-# Tutorial 4_3
-add_executable(tutorial_4_3
-  ./src/tutorials/tutorial_4_3.cpp
-)
-ament_target_dependencies(tutorial_4_3 ${dependencies})
-
-# Tutorial 4_4
-add_executable(tutorial_4_4
-  ./src/tutorials/tutorial_4_4.cpp
-)
-ament_target_dependencies(tutorial_4_4 ${dependencies})
-
-# Tutorial 5
-add_executable(tutorial_5
-  ./src/tutorials/tutorial_5.cpp
-)
-ament_target_dependencies(tutorial_5 ${dependencies})
-
-# Tutorial 6
-add_executable(tutorial_6
-  ./src/tutorials/tutorial_6.cpp
-)
-ament_target_dependencies(tutorial_6 ${dependencies})
-
-# Tutorial 7
-add_executable(tutorial_7
-  ./src/tutorials/tutorial_7.cpp
-)
-ament_target_dependencies(tutorial_7 ${dependencies})
-
-# Tutorial 8
-add_executable(tutorial_8
-  ./src/tutorials/tutorial_8.cpp
-)
-ament_target_dependencies(tutorial_8 ${dependencies})
-
-# Tutorial 9
-add_executable(tutorial_9
-  ./src/tutorials/tutorial_9.cpp
-)
-ament_target_dependencies(tutorial_9 ${dependencies})
-
-# Tutorial 10
-add_executable(tutorial_10
-  ./src/tutorials/tutorial_10.cpp
-)
-ament_target_dependencies(tutorial_10 ${dependencies})
-
-# Tutorial 11
-add_executable(tutorial_11
-  ./src/tutorials/tutorial_11.cpp
-)
-ament_target_dependencies(tutorial_11 ${dependencies})
 
 set(TUTORIAL_EXECUTABLES
   tutorial_1
@@ -139,6 +52,12 @@ set(TUTORIAL_EXECUTABLES
   tutorial_10
   tutorial_11
 )
+
+foreach(tutorial_executable IN LISTS TUTORIAL_EXECUTABLES)
+  add_executable(${tutorial_executable} ./src/tutorials/${tutorial_executable}.cpp)
+  ament_target_dependencies(${tutorial_executable} ${dependencies})
+endforeach()
+
 
 # INSTALL
 install(TARGETS
