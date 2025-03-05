@@ -12,6 +12,9 @@
 #include <string>
 #include <iostream>
 
+// ROS2
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
 // Custom type
 struct Pose2D
 {
@@ -134,13 +137,14 @@ public:
   }
 };
 
-int main (int argc, char *argv[])
+int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
 {
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomethingNode>("SaySomething");
   factory.registerNodeType<MoveBaseActionNode>("MoveBase");
 
-  factory.registerBehaviorTreeFromFile("./config/behaviortree/tutorial_6.xml");
+  auto package_path = ament_index_cpp::get_package_share_directory("ros2-behaviortree");
+  factory.registerBehaviorTreeFromFile(package_path + "/config/behaviortree/tutorial_6.xml");
   auto tree = factory.createTree("MainTree");
 
   // keep ticking till the end
