@@ -12,6 +12,9 @@
 #include <string>
 #include <iostream>
 
+// ROS2
+#include <ament_index_cpp/get_package_share_directory.hpp>
+
 class SaySomethingNode : public BT::SyncActionNode
 {
 public:
@@ -41,14 +44,15 @@ public:
   }
 };
 
-int main (int argc, char *argv[])
+int main ([[maybe_unused]] int argc, [[maybe_unused]] char *argv[])
 {
   BT::BehaviorTreeFactory factory;
   factory.registerNodeType<SaySomethingNode>("SaySomething");
 
   // Find all xml files in a folder and register all of them
   // we will use std::filesystem::directory_iterator
-  std::string search_directory {"./config/behaviortree/tutorial_7"};
+  auto package_path = ament_index_cpp::get_package_share_directory("ros2-behaviortree");
+  std::string search_directory {package_path + "/config/behaviortree/tutorial_7"};
 
   for (auto const& entry : std::filesystem::directory_iterator(search_directory))
   {
